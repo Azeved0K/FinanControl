@@ -39,8 +39,8 @@ class Command(BaseCommand):
             )
         
         # Limpar categorias e transações existentes do usuário
-        Category.objects.filter(user=user).delete()
         Transaction.objects.filter(user=user).delete()
+        Category.objects.filter(user=user).delete()
         
         # Definir categorias de despesas
         expense_categories_data = [
