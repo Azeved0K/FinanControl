@@ -133,6 +133,7 @@ function Login({ onLogin }) {
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentView, setCurrentView] = useState('dashboard');
+  const [transactionType, setTransactionType] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -140,6 +141,16 @@ function App() {
     setIsAuthenticated(!!token);
     setLoading(false);
   }, []);
+
+  const handleAddTransaction = (type) => {
+    setTransactionType(type);
+    setCurrentView('transactions');
+  };
+
+  const handleNavigate = (view) => {
+    setTransactionType(null); // Limpar tipo ao navegar
+    setCurrentView(view);
+  };
 
   if (loading) {
     return (
@@ -160,12 +171,19 @@ function App() {
   return (
     <ThemeProvider>
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-        <Sidebar currentView={currentView} setCurrentView={setCurrentView} />
+        <Sidebar currentView={currentView} setCurrentView={handleNavigate} />
         
         <main className="lg:pl-64 pt-16 lg:pt-0">
           <div className="p-6 lg:p-8">
-            {currentView === 'dashboard' && <Dashboard />}
-            {currentView === 'transactions' && <Transactions />}
+            {currentView === 'dashboard' && (
+              <Dashboard 
+                onNavigate={handleNavigate} 
+                onAddTransaction={handleAddTransaction}
+              />
+            )}
+            {currentView === 'transactions' && (
+              <Transactions defaultType={transactionType} />
+            )}
             {currentView === 'categories' && <Categories />}
           </div>
         </main>

@@ -3,11 +3,11 @@ import {
   AreaChart, Area, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
 } from 'recharts';
-import { TrendingUp, TrendingDown, Wallet, Lightbulb } from 'lucide-react';
+import { TrendingUp, TrendingDown, Wallet, Lightbulb, Plus } from 'lucide-react';
 import { transactionsAPI, insightsAPI } from '../api/api';
 import { format, subDays } from 'date-fns';
 
-export default function Dashboard() {
+export default function Dashboard({ onNavigate, onAddTransaction }) {
   const [summary, setSummary] = useState({
     total_income: 0,
     total_expense: 0,
@@ -102,8 +102,17 @@ export default function Dashboard() {
                 R$ {Number(summary.total_income).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
               </p>
             </div>
-            <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center">
-              <TrendingUp className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => onAddTransaction?.('IN')}
+                className="p-2 bg-primary-100 dark:bg-primary-900/30 hover:bg-primary-200 dark:hover:bg-primary-900/50 rounded-lg transition-colors"
+                title="Adicionar Receita"
+              >
+                <Plus className="w-5 h-5 text-primary-600 dark:text-primary-400" />
+              </button>
+              <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center">
+                <TrendingUp className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+              </div>
             </div>
           </div>
         </div>
@@ -116,8 +125,17 @@ export default function Dashboard() {
                 R$ {Number(summary.total_expense).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
               </p>
             </div>
-            <div className="w-12 h-12 bg-danger-100 dark:bg-danger-900/30 rounded-full flex items-center justify-center">
-              <TrendingDown className="w-6 h-6 text-danger-600 dark:text-danger-400" />
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => onAddTransaction?.('OUT')}
+                className="p-2 bg-danger-100 dark:bg-danger-900/30 hover:bg-danger-200 dark:hover:bg-danger-900/50 rounded-lg transition-colors"
+                title="Adicionar Despesa"
+              >
+                <Plus className="w-5 h-5 text-danger-600 dark:text-danger-400" />
+              </button>
+              <div className="w-12 h-12 bg-danger-100 dark:bg-danger-900/30 rounded-full flex items-center justify-center">
+                <TrendingDown className="w-6 h-6 text-danger-600 dark:text-danger-400" />
+              </div>
             </div>
           </div>
         </div>

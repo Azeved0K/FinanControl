@@ -74,8 +74,8 @@ export default function Categories() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Categorias</h1>
-          <p className="text-gray-500 mt-1">Gerencie suas categorias personalizadas</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Categorias</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Gerencie suas categorias personalizadas</p>
         </div>
         <button
           onClick={() => setShowModal(true)}
@@ -91,12 +91,12 @@ export default function Categories() {
         <div className="card">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500">Total</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
+              <p className="text-sm text-gray-500 dark:text-gray-400">Total</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-1">
                 {categories.length}
               </p>
             </div>
-            <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
+            <div className="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
               <span className="text-2xl">📊</span>
             </div>
           </div>
@@ -105,13 +105,13 @@ export default function Categories() {
         <div className="card">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500">Receitas</p>
-              <p className="text-2xl font-bold text-primary-600 mt-1">
+              <p className="text-sm text-gray-500 dark:text-gray-400">Receitas</p>
+              <p className="text-2xl font-bold text-primary-600 dark:text-primary-400 mt-1">
                 {incomeCount}
               </p>
             </div>
-            <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center">
-              <TrendingUp className="w-6 h-6 text-primary-600" />
+            <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center">
+              <TrendingUp className="w-6 h-6 text-primary-600 dark:text-primary-400" />
             </div>
           </div>
         </div>
@@ -119,26 +119,26 @@ export default function Categories() {
         <div className="card">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500">Despesas</p>
-              <p className="text-2xl font-bold text-danger-600 mt-1">
+              <p className="text-sm text-gray-500 dark:text-gray-400">Despesas</p>
+              <p className="text-2xl font-bold text-danger-600 dark:text-danger-400 mt-1">
                 {expenseCount}
               </p>
             </div>
-            <div className="w-12 h-12 bg-danger-100 rounded-full flex items-center justify-center">
-              <TrendingDown className="w-6 h-6 text-danger-600" />
+            <div className="w-12 h-12 bg-danger-100 dark:bg-danger-900/30 rounded-full flex items-center justify-center">
+              <TrendingDown className="w-6 h-6 text-danger-600 dark:text-danger-400" />
             </div>
           </div>
         </div>
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex space-x-2 border-b border-gray-200">
+      <div className="flex space-x-2 border-b border-gray-200 dark:border-gray-700">
         <button
           onClick={() => setFilter('ALL')}
           className={`px-4 py-2 font-medium transition-colors border-b-2 ${
             filter === 'ALL'
-              ? 'border-primary-600 text-primary-600'
-              : 'border-transparent text-gray-500 hover:text-gray-700'
+              ? 'border-primary-600 text-primary-600 dark:text-primary-400'
+              : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
         >
           Todas ({categories.length})
@@ -147,8 +147,8 @@ export default function Categories() {
           onClick={() => setFilter('IN')}
           className={`px-4 py-2 font-medium transition-colors border-b-2 ${
             filter === 'IN'
-              ? 'border-primary-600 text-primary-600'
-              : 'border-transparent text-gray-500 hover:text-gray-700'
+              ? 'border-primary-600 text-primary-600 dark:text-primary-400'
+              : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
         >
           Receitas ({incomeCount})
@@ -157,8 +157,8 @@ export default function Categories() {
           onClick={() => setFilter('OUT')}
           className={`px-4 py-2 font-medium transition-colors border-b-2 ${
             filter === 'OUT'
-              ? 'border-danger-600 text-danger-600'
-              : 'border-transparent text-gray-500 hover:text-gray-700'
+              ? 'border-danger-600 text-danger-600 dark:text-danger-400'
+              : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
         >
           Despesas ({expenseCount})
@@ -176,24 +176,24 @@ export default function Categories() {
               <div className="flex items-start justify-between">
                 <div className="flex items-center space-x-3 flex-1 min-w-0">
                   <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                    category.type === 'IN' ? 'bg-primary-100' : 'bg-danger-100'
+                    category.type === 'IN' ? 'bg-primary-100 dark:bg-primary-900/30' : 'bg-danger-100 dark:bg-danger-900/30'
                   }`}>
                     <span className="text-2xl">{getIconEmoji(category.icon)}</span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-gray-900 truncate">
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-100 truncate">
                       {category.name}
                     </h3>
                     <div className="flex items-center space-x-2 mt-1">
                       <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
                         category.type === 'IN'
-                          ? 'bg-primary-100 text-primary-700'
-                          : 'bg-danger-100 text-danger-700'
+                          ? 'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400'
+                          : 'bg-danger-100 dark:bg-danger-900/30 text-danger-700 dark:text-danger-400'
                       }`}>
                         {category.type === 'IN' ? 'Receita' : 'Despesa'}
                       </span>
                       {category.transaction_count > 0 && (
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-gray-500 dark:text-gray-400">
                           {category.transaction_count} transações
                         </span>
                       )}
@@ -204,14 +204,14 @@ export default function Categories() {
                 <div className="flex space-x-1 ml-2">
                   <button
                     onClick={() => handleEdit(category)}
-                    className="p-2 text-gray-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-colors"
+                    className="p-2 text-gray-400 dark:text-gray-500 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors"
                     title="Editar"
                   >
                     <Edit2 className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => handleDelete(category.id, category.name)}
-                    className="p-2 text-gray-400 hover:text-danger-600 hover:bg-danger-50 rounded-lg transition-colors"
+                    className="p-2 text-gray-400 dark:text-gray-500 hover:text-danger-600 dark:hover:text-danger-400 hover:bg-danger-50 dark:hover:bg-danger-900/20 rounded-lg transition-colors"
                     title="Excluir"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -224,7 +224,7 @@ export default function Categories() {
       ) : (
         <div className="card text-center py-12">
           <div className="text-6xl mb-4">📁</div>
-          <p className="text-gray-500 text-lg">
+          <p className="text-gray-500 dark:text-gray-400 text-lg">
             {filter === 'ALL'
               ? 'Nenhuma categoria encontrada'
               : `Nenhuma categoria de ${filter === 'IN' ? 'receita' : 'despesa'} encontrada`

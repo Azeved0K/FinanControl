@@ -1,18 +1,30 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { transactionsAPI } from '../api/api';
 import { format } from 'date-fns';
 
-export default function AddTransaction({ categories, onClose, onTransactionAdded }) {
+export default function AddTransaction({ categories, transaction, defaultType, onClose, onTransactionAdded }) {
   const [formData, setFormData] = useState({
     description: '',
     amount: '',
     date: format(new Date(), 'yyyy-MM-dd'),
-    type: 'OUT',
+    type: defaultType || 'OUT',
     category: ''
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (transaction) {
+      setFormData({
+        description: transaction.description,
+        amount: transaction.amount,
+        date: transaction.date,
+        type: transaction.type,
+        category: transaction.category
+      });
+    }
+  }, [transaction]);
 
   const filteredCategories = categories.filter(c => c.type === formData.type);
 
@@ -27,13 +39,24 @@ export default function AddTransaction({ categories, onClose, onTransactionAdded
 
     try {
       setLoading(true);
-      await transactionsAPI.create({
-        ...formData,
-        amount: parseFloat(formData.amount)
-      });
+      
+      if (transaction) {
+        // Atualizar transação existente
+        await transactionsAPI.update(transaction.id, {
+          ...formData,
+          amount: parseFloat(formData.amount)
+        });
+      } else {
+        // Criar nova transação
+        await transactionsAPI.create({
+          ...formData,
+          amount: parseFloat(formData.amount)
+        });
+      }
+      
       onTransactionAdded();
     } catch (err) {
-      setError(err.response?.data?.detail || 'Erro ao criar transação');
+      setError(err.response?.data?.detail || 'Erro ao salvar transação');
     } finally {
       setLoading(false);
     }
@@ -55,22 +78,24 @@ export default function AddTransaction({ categories, onClose, onTransactionAdded
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl shadow-xl max-w-md w-full">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-md w-full">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">Nova Transação</h2>
+        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+            {transaction ? 'Editar Transação' : 'Nova Transação'}
+          </h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
           >
-            <X className="w-5 h-5 text-gray-500" />
+            <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
           </button>
         </div>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {error && (
-            <div className="p-3 bg-danger-50 border border-danger-200 rounded-lg text-danger-700 text-sm">
+            <div className="p-3 bg-danger-50 dark:bg-danger-900/20 border border-danger-200 dark:border-danger-800 rounded-lg text-danger-700 dark:text-danger-400 text-sm">
               {error}
             </div>
           )}
@@ -85,7 +110,7 @@ export default function AddTransaction({ categories, onClose, onTransactionAdded
                 className={`py-2 px-4 rounded-lg font-medium transition-all ${
                   formData.type === 'IN'
                     ? 'bg-primary-600 text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                 }`}
               >
                 Receita
@@ -96,7 +121,7 @@ export default function AddTransaction({ categories, onClose, onTransactionAdded
                 className={`py-2 px-4 rounded-lg font-medium transition-all ${
                   formData.type === 'OUT'
                     ? 'bg-danger-600 text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                 }`}
               >
                 Despesa
@@ -180,7 +205,7 @@ export default function AddTransaction({ categories, onClose, onTransactionAdded
               disabled={loading}
               className="flex-1 btn btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Salvando...' : 'Salvar'}
+              {loading ? 'Salvando...' : transaction ? 'Atualizar' : 'Salvar'}
             </button>
           </div>
         </form>

@@ -75,24 +75,24 @@ export default function CategoryModal({ category, onClose, onCategoryAdded }) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 sticky top-0 bg-white">
-          <h2 className="text-xl font-semibold text-gray-900">
+        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700 sticky top-0 bg-white dark:bg-gray-800">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
             {category ? 'Editar Categoria' : 'Nova Categoria'}
           </h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
           >
-            <X className="w-5 h-5 text-gray-500" />
+            <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
           </button>
         </div>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {error && (
-            <div className="p-3 bg-danger-50 border border-danger-200 rounded-lg text-danger-700 text-sm">
+            <div className="p-3 bg-danger-50 dark:bg-danger-900/20 border border-danger-200 dark:border-danger-800 rounded-lg text-danger-700 dark:text-danger-400 text-sm">
               {error}
             </div>
           )}
@@ -121,8 +121,8 @@ export default function CategoryModal({ category, onClose, onCategoryAdded }) {
                 onClick={() => setFormData(prev => ({ ...prev, type: 'IN' }))}
                 className={`py-3 px-4 rounded-lg font-medium transition-all border-2 ${
                   formData.type === 'IN'
-                    ? 'bg-primary-50 border-primary-600 text-primary-700'
-                    : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300'
+                    ? 'bg-primary-50 dark:bg-primary-900/30 border-primary-600 text-primary-700 dark:text-primary-400'
+                    : 'bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-500'
                 }`}
               >
                 <div className="flex items-center justify-center space-x-2">
@@ -136,8 +136,8 @@ export default function CategoryModal({ category, onClose, onCategoryAdded }) {
                 onClick={() => setFormData(prev => ({ ...prev, type: 'OUT' }))}
                 className={`py-3 px-4 rounded-lg font-medium transition-all border-2 ${
                   formData.type === 'OUT'
-                    ? 'bg-danger-50 border-danger-600 text-danger-700'
-                    : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300'
+                    ? 'bg-danger-50 dark:bg-danger-900/30 border-danger-600 text-danger-700 dark:text-danger-400'
+                    : 'bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-500'
                 }`}
               >
                 <div className="flex items-center justify-center space-x-2">
@@ -151,7 +151,7 @@ export default function CategoryModal({ category, onClose, onCategoryAdded }) {
           {/* Icon */}
           <div>
             <label className="label">Ícone</label>
-            <div className="grid grid-cols-4 sm:grid-cols-5 gap-2 max-h-64 overflow-y-auto p-2 border border-gray-200 rounded-lg">
+            <div className="grid grid-cols-4 sm:grid-cols-5 gap-2 max-h-64 overflow-y-auto p-2 border border-gray-200 dark:border-gray-600 rounded-lg">
               {AVAILABLE_ICONS.map((icon) => (
                 <button
                   key={icon.name}
@@ -159,44 +159,44 @@ export default function CategoryModal({ category, onClose, onCategoryAdded }) {
                   onClick={() => setFormData(prev => ({ ...prev, icon: icon.name }))}
                   className={`p-3 rounded-lg transition-all border-2 ${
                     formData.icon === icon.name
-                      ? 'bg-primary-50 border-primary-600'
-                      : 'bg-white border-gray-200 hover:border-gray-300'
+                      ? 'bg-primary-50 dark:bg-primary-900/30 border-primary-600'
+                      : 'bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500'
                   }`}
                   title={icon.label}
                 >
                   <div className="flex flex-col items-center space-y-1">
                     <span className="text-2xl">{icon.emoji}</span>
-                    <span className="text-xs text-gray-600 truncate w-full text-center">
+                    <span className="text-xs text-gray-600 dark:text-gray-400 truncate w-full text-center">
                       {icon.label}
                     </span>
                   </div>
                 </button>
               ))}
             </div>
-            <p className="text-xs text-gray-500 mt-2">
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
               Selecione um ícone que represente sua categoria
             </p>
           </div>
 
           {/* Preview */}
-          <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
-            <p className="text-sm text-gray-600 mb-3">Preview:</p>
+          <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">Preview:</p>
             <div className="flex items-center space-x-3">
               <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                formData.type === 'IN' ? 'bg-primary-100' : 'bg-danger-100'
+                formData.type === 'IN' ? 'bg-primary-100 dark:bg-primary-900/30' : 'bg-danger-100 dark:bg-danger-900/30'
               }`}>
                 <span className="text-2xl">
                   {AVAILABLE_ICONS.find(i => i.name === formData.icon)?.emoji || '💰'}
                 </span>
               </div>
               <div>
-                <p className="font-semibold text-gray-900">
+                <p className="font-semibold text-gray-900 dark:text-gray-100">
                   {formData.name || 'Nome da Categoria'}
                 </p>
                 <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
                   formData.type === 'IN'
-                    ? 'bg-primary-100 text-primary-700'
-                    : 'bg-danger-100 text-danger-700'
+                    ? 'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400'
+                    : 'bg-danger-100 dark:bg-danger-900/30 text-danger-700 dark:text-danger-400'
                 }`}>
                   {formData.type === 'IN' ? 'Receita' : 'Despesa'}
                 </span>
