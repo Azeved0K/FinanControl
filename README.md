@@ -199,13 +199,10 @@ Analisa suas transações e fornece dicas como:
 4. Push para a branch (`git push origin feature/nova-funcionalidade`)
 5. Abra um Pull Request
 
-## 📝 Licença
-
-Este projeto está sob a licença MIT.
 
 ## 👨‍💻 Desenvolvido por
 
-Arquiteto de Software e Desenvolvedor Full Stack Sênior
+Kauã Patricki de Azevedo Rosa & Enzo Eduardo Allebrand
 
 ---
 
