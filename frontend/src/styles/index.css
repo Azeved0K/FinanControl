@@ -3,45 +3,135 @@
 @tailwind utilities;
 
 @layer base {
-  * {
-    @apply border-gray-200 dark:border-gray-700;
-  }
-  
-  body {
-    @apply bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 antialiased transition-colors duration-200;
-  }
+    * {
+        @apply border-gray-200 dark:border-gray-700;
+    }
+
+    body {
+        @apply bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 antialiased transition-colors duration-200;
+    }
+
+    @keyframes modal-in {
+        0% {
+            opacity: 0;
+            transform: scale(0.98) translateY(6px);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+
+    @keyframes overlay-in {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes modal-out {
+        0% {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+        100% {
+            opacity: 0;
+            transform: scale(0.98) translateY(6px);
+        }
+    }
+
+    @keyframes overlay-out {
+        0% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+
+    @keyframes tooltip-in {
+        0% {
+            opacity: 0;
+            transform: translateY(4px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 }
 
 @layer components {
-  .btn {
-    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:ring-offset-gray-900;
-  }
-  
-  .btn-primary {
-    @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 dark:bg-primary-600 dark:hover:bg-primary-700;
-  }
-  
-  .btn-danger {
-    @apply bg-danger-600 text-white hover:bg-danger-700 focus:ring-danger-500 dark:bg-danger-600 dark:hover:bg-danger-700;
-  }
-  
-  .btn-secondary {
-    @apply bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 focus:ring-gray-500;
-  }
-  
-  .card {
-    @apply bg-white rounded-xl shadow-soft p-6 transition-colors duration-200;
-  }
+    .btn {
+        @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-offset-2 dark:ring-offset-gray-900;
+        @apply active:scale-[0.98];
+    }
 
-  .dark .card {
-    @apply bg-gray-800 shadow-soft-dark;
-  }
-  
-  .input {
-    @apply w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors duration-200;
-  }
-  
-  .label {
-    @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1;
-  }
+    .btn-primary {
+        @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 dark:bg-primary-600 dark:hover:bg-primary-700;
+    }
+
+    .btn-danger {
+        @apply bg-danger-600 text-white hover:bg-danger-700 focus:ring-danger-500 dark:bg-danger-600 dark:hover:bg-danger-700;
+    }
+
+    .btn-secondary {
+        @apply bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 focus:ring-gray-500;
+    }
+
+    .card {
+        @apply bg-white rounded-xl shadow-soft p-6 transition-all duration-200 ease-out;
+        @apply hover:-translate-y-0.5 hover:shadow-lg;
+    }
+
+    .dark .card {
+        @apply bg-gray-800 shadow-soft-dark;
+    }
+
+    .input {
+        @apply w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg;
+        @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+        @apply transition-all duration-200 ease-out;
+    }
+
+    .label {
+        @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1;
+    }
+
+    .modal-overlay {
+        animation: overlay-in 160ms ease-out both;
+    }
+
+    .modal-panel {
+        animation: modal-in 180ms ease-out both;
+    }
+
+    .modal-out .modal-overlay {
+        animation: overlay-out 140ms ease-in both;
+    }
+
+    .modal-out .modal-panel {
+        animation: modal-out 160ms ease-in both;
+    }
+
+    .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .hide-scrollbar::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    }
+
+    .dark input[type='date']::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+        opacity: 0.85;
+    }
+
+    .tooltip-in {
+        animation: tooltip-in 120ms ease-out both;
+    }
 }
